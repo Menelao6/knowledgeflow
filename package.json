@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "jsx": "^0.9.89",
     "next": "16.0.4",
     "openai": "^6.9.1",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "tag": "^0.4.17"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

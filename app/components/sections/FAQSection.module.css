@@ -1,0 +1,104 @@
+.faqContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.faqItem {
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  background: var(--color-surface);
+}
+
+.faqItem:hover {
+  border-color: var(--color-primary-soft);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.faqQuestion {
+  width: 100%;
+  padding: var(--space-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-surface);
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.faqQuestion:hover {
+  background: var(--color-primary-soft);
+}
+
+.faqIcon {
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+  transition: transform var(--transition-base);
+  flex-shrink: 0;
+  margin-left: var(--space-md);
+}
+
+.faqIconOpen {
+  transform: rotate(45deg);
+}
+
+.faqAnswer {
+  padding: 0 var(--space-lg);
+  max-height: 0;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.faqAnswerOpen {
+  padding: var(--space-lg);
+  max-height: 500px;
+  animation: slideDown 300ms ease-out forwards;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-primary-soft);
+}
+
+/* Staggered animations */
+.faqItem0 { animation: fadeInUp 600ms ease-out 0ms both; }
+.faqItem1 { animation: fadeInUp 600ms ease-out 100ms both; }
+.faqItem2 { animation: fadeInUp 600ms ease-out 200ms both; }
+.faqItem3 { animation: fadeInUp 600ms ease-out 300ms both; }
+.faqItem4 { animation: fadeInUp 600ms ease-out 400ms both; }
+.faqItem5 { animation: fadeInUp 600ms ease-out 500ms both; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+    transform: translateY(0);
+  }
+}

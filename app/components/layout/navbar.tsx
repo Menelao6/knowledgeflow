@@ -1,19 +1,20 @@
 import Link from "next/link";
 import type { FC } from "react";
+import styles from "./Navbar.module.css";
 
 const Navbar: FC = () => {
   return (
-    <nav className="navbar">
-      <div className="navbar-left">
-        <Link href="/">
-          <div className="navbar-logo">KF</div>
+    <nav className={styles.navbar}>
+      <div className={styles.navbarLeft}>
+        <Link href="/" className={styles.navbarLogo}>
+          KF
         </Link>
         <Link href="/">
-          <span className="navbar-title">Knowledge Flow</span>
+          <span className={styles.navbarTitle}>Knowledge Flow</span>
         </Link>
       </div>
 
-      <div className="navbar-right">
+      <div className={styles.navbarRight}>
         <Link href="/dashboard" className="btn btn-ghost">
           Dashboard
         </Link>

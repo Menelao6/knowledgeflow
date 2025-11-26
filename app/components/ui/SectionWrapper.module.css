@@ -1,0 +1,61 @@
+.section {
+  width: 100%;
+  animation: fadeIn 600ms ease-out;
+}
+
+.noAnimation {
+  animation: none;
+}
+
+/* Background Colors */
+.bgLight {
+  background-color: var(--color-bg);
+}
+
+.bgWhite {
+  background-color: var(--color-surface);
+}
+
+.bgPrimarySoft {
+  background-color: var(--color-primary-soft);
+}
+
+/* Container Sizes */
+.containerSm {
+  max-width: 800px;
+}
+
+.containerMd {
+  max-width: 1200px;
+}
+
+.containerLg {
+  max-width: 1400px;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Padding */
+.paddingSm {
+  padding: var(--space-2xl) var(--space-md);
+}
+
+.paddingMd {
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+.paddingLg {
+  padding: var(--space-4xl) var(--space-xl);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

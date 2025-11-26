@@ -1,0 +1,60 @@
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sizes */
+.sm {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: var(--font-size-sm);
+}
+
+.md {
+  width: 2rem;
+  height: 2rem;
+  font-size: var(--font-size-base);
+}
+
+.lg {
+  width: 3rem;
+  height: 3rem;
+  font-size: var(--font-size-lg);
+}
+
+.xl {
+  width: 4rem;
+  height: 4rem;
+  font-size: var(--font-size-2xl);
+}
+
+/* Colors */
+.primary {
+  color: var(--color-primary);
+}
+
+.accent {
+  color: var(--color-accent);
+}
+
+.text {
+  color: var(--color-text-main);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.animate {
+  animation: floatHover 3s ease-in-out infinite;
+}
+
+@keyframes floatHover {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
