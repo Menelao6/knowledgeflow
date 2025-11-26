@@ -1,0 +1,57 @@
+learnmate-ai/
+├─ pages/
+│  ├─ index.tsx                 # Landing
+│  ├─ upload.tsx                # Upload / create from notes
+│  ├─ dashboard.tsx             # My courses + categories
+│  ├─ category/
+│  │  └─ [slug].tsx             # Category / topics
+│  ├─ course/
+│  │  └─ [id].tsx               # Course page (tabs)
+│  └─ api/
+│     ├─ generate-course.ts     # From notes
+│     └─ generate-topic-course.ts # From category/topic
+│
+├─ components/
+│  ├─ layout/
+│  │  ├─ Navbar.tsx
+│  │  └─ PageContainer.tsx
+│  ├─ common/
+│  │  ├─ Button.tsx
+│  │  ├─ Card.tsx
+│  │  ├─ ProgressBar.tsx
+│  │  └─ Tabs.tsx
+│  ├─ courses/
+│  │  ├─ CourseCard.tsx
+│  │  ├─ CourseTabs.tsx
+│  │  ├─ ModuleList.tsx
+│  │  ├─ LessonViewer.tsx
+│  │  ├─ FlashcardViewer.tsx
+│  │  └─ QuizRunner.tsx
+│  └─ categories/
+│     └─ CategoryCard.tsx
+│
+├─ lib/
+│  ├─ models/
+│  │  └─ course.ts              # TS types
+│  ├─ storage/
+│  │  └─ courseStorage.ts       # localStorage logic
+│  ├─ ai/
+│  │  ├─ client.ts              # helpers to call API routes
+│  │  └─ prompts.ts             # (optional) prompt templates
+│  └─ data/
+│     └─ categories.ts          # static categories + topics
+│
+├─ styles/
+│  ├─ globals.css
+│  ├─ layout.css
+│  ├─ home.css
+│  ├─ upload.css
+│  ├─ dashboard.css
+│  ├─ category.css
+│  └─ course.css
+│
+├─ tsconfig.json
+├─ next.config.js
+└─ package.json
+
+

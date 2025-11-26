@@ -1,0 +1,26 @@
+
+.section {
+  margin-top: 2rem;
+}
+
+.section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.section > p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.section .grid-cards {
+  display: grid;
+  gap: 1.2rem;
+}
+
+@media (min-width: 768px) {
+  .section .grid-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
