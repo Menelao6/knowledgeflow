@@ -7,6 +7,8 @@ import PageContainer from "../../components/layout/PageContainer";
 import { categories } from "../../lib/data/categories";
 import { generateCourseFromTopic } from "../../lib/ai/client";
 import { upsertCourse } from "../../lib/storage/courseStorage";
+import Alert from "../../components/common/Alert";
+import Spinner from "../../components/common/Spinner";
 
 const techTopics = [
   { id: "python-intro", title: "Introduction to Python" },
@@ -27,6 +29,7 @@ export default function CategoryPage() {
     "beginner"
   );
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!category) {
     return (
@@ -41,7 +44,11 @@ export default function CategoryPage() {
 
   async function handleCustomTopic(e: FormEvent) {
     e.preventDefault();
-    if (!customTopic.trim()) return;
+    setError(null);
+    if (!customTopic.trim()) {
+      setError("Please describe what you want to learn.");
+      return;
+    }
 
     try {
       setLoading(true);
@@ -54,13 +61,16 @@ export default function CategoryPage() {
       router.push(`/course/${course.id}`);
     } catch (err) {
       console.error(err);
-      alert("Failed to create course. Please try again.");
+      setError(
+        "Could not create the course from this topic. Check your OpenAI key and try again."
+      );
     } finally {
       setLoading(false);
     }
   }
 
   async function handleOpenTopic(title: string) {
+    setError(null);
     try {
       setLoading(true);
       const course = await generateCourseFromTopic({
@@ -72,7 +82,9 @@ export default function CategoryPage() {
       router.push(`/course/${course.id}`);
     } catch (err) {
       console.error(err);
-      alert("Failed to open course.");
+      setError(
+        "Could not generate this topic course. Please try again or pick another topic."
+      );
     } finally {
       setLoading(false);
     }
@@ -86,6 +98,12 @@ export default function CategoryPage() {
       <PageContainer>
         <h1>{category!.name} Courses</h1>
         <p>Choose a topic or create your own custom mini-course.</p>
+
+        {error && (
+          <div style={{ marginTop: "0.75rem", marginBottom: "0.75rem" }}>
+            <Alert variant="error">{error}</Alert>
+          </div>
+        )}
 
         <section className="section">
           <h2>Popular topics</h2>
@@ -102,7 +120,8 @@ export default function CategoryPage() {
                   onClick={() => handleOpenTopic(topic.title)}
                   disabled={loading}
                 >
-                  {topic.title}
+                  <span>{topic.title}</span>
+                  {loading && <Spinner size={14} />}
                 </button>
               ))}
             </div>
@@ -127,7 +146,9 @@ export default function CategoryPage() {
               <select
                 value={level}
                 onChange={(e) =>
-                  setLevel(e.target.value as "beginner" | "intermediate" | "advanced")
+                  setLevel(
+                    e.target.value as "beginner" | "intermediate" | "advanced"
+                  )
                 }
               >
                 <option value="beginner">Beginner</option>
@@ -136,8 +157,18 @@ export default function CategoryPage() {
               </select>
             </label>
 
-            <button className="btn btn-primary" type="submit" disabled={loading}>
-              {loading ? "Creating..." : "Create Course With AI"}
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Spinner size={16} /> <span>Creating...</span>
+                </>
+              ) : (
+                "Create Course With AI"
+              )}
             </button>
           </form>
         </section>

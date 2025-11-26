@@ -1,7 +1,14 @@
 "use client";
 
 import type { FC } from "react";
+import { useEffect, useState } from "react";
 import type { Course, Module } from "../../lib/models/course";
+import {
+  explainModule,
+  generatePracticeQuestions,
+} from "../../lib/ai/client";
+import Spinner from "../common/Spinner";
+import Alert from "../common/Alert";
 
 type LessonViewerProps = {
   course: Course;
@@ -17,27 +24,71 @@ const LessonViewer: FC<LessonViewerProps> = ({
   onModuleCompleted,
 }) => {
   const modules = course.modules;
-  const current = activeModule ?? modules[0];
 
-  if (!modules.length) {
+  const fallbackModule = modules[0] ?? null;
+
+  if (!modules.length || !fallbackModule) {
     return <p className="text-muted">No modules for this course yet.</p>;
   }
 
-  function handleExplainSimple() {
-    // Placeholder – later we can open an AI-powered explanation panel
-    alert(
-      "In the final version, this button will ask the AI to explain this module in simpler terms."
-    );
+  const current = activeModule ?? fallbackModule;
+
+  const [simpleText, setSimpleText] = useState<string | null>(null);
+  const [practice, setPractice] = useState<string[] | null>(null);
+  const [loadingExplain, setLoadingExplain] = useState(false);
+  const [loadingPractice, setLoadingPractice] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // When the current module changes, reset the extra AI outputs
+  useEffect(() => {
+    setSimpleText(null);
+    setPractice(null);
+    setError(null);
+    setLoadingExplain(false);
+    setLoadingPractice(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current.id]);
+
+  async function handleExplainSimple() {
+    setError(null);
+    setSimpleText(null);
+    setLoadingExplain(true);
+
+    try {
+      const result = await explainModule({
+        title: current.title,
+        content: current.content,
+      });
+      setSimpleText(result);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to get simplified explanation. Please try again.");
+    } finally {
+      setLoadingExplain(false);
+    }
   }
 
-  function handleGeneratePractice() {
-    alert(
-      "In the final version, this button will ask the AI to generate extra practice questions for this module."
-    );
+  async function handleGeneratePractice() {
+    setError(null);
+    setPractice(null);
+    setLoadingPractice(true);
+
+    try {
+      const result = await generatePracticeQuestions({
+        title: current.title,
+        content: current.content,
+      });
+      setPractice(result);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to generate practice questions. Please try again.");
+    } finally {
+      setLoadingPractice(false);
+    }
   }
 
   function handleMarkCompleted() {
-    if (onModuleCompleted && current) {
+    if (onModuleCompleted) {
       onModuleCompleted(current);
     }
   }
@@ -97,16 +148,32 @@ const LessonViewer: FC<LessonViewerProps> = ({
             type="button"
             className="btn btn-secondary"
             onClick={handleExplainSimple}
+            disabled={loadingExplain}
           >
-            Explain in simple terms
+            {loadingExplain ? (
+              <>
+                <Spinner size={16} /> <span>Explaining...</span>
+              </>
+            ) : (
+              "Explain in simple terms"
+            )}
           </button>
+
           <button
             type="button"
             className="btn btn-secondary"
             onClick={handleGeneratePractice}
+            disabled={loadingPractice}
           >
-            Generate practice questions
+            {loadingPractice ? (
+              <>
+                <Spinner size={16} /> <span>Generating questions...</span>
+              </>
+            ) : (
+              "Generate practice questions"
+            )}
           </button>
+
           {onModuleCompleted && (
             <button
               type="button"
@@ -117,6 +184,49 @@ const LessonViewer: FC<LessonViewerProps> = ({
             </button>
           )}
         </div>
+
+        {error && (
+          <div style={{ marginTop: "1rem" }}>
+            <Alert variant="error">{error}</Alert>
+          </div>
+        )}
+
+        {loadingExplain && !simpleText && (
+          <div style={{ marginTop: "1rem" }}>
+            <Spinner size={22} />{" "}
+            <span style={{ fontSize: "0.9rem" }}>
+              Explaining this module in simple terms...
+            </span>
+          </div>
+        )}
+
+        {simpleText && (
+          <div style={{ marginTop: "1rem" }}>
+            <Alert variant="info">{simpleText}</Alert>
+          </div>
+        )}
+
+        {loadingPractice && !practice && (
+          <div style={{ marginTop: "1rem" }}>
+            <Spinner size={22} />{" "}
+            <span style={{ fontSize: "0.9rem" }}>
+              Generating extra practice questions...
+            </span>
+          </div>
+        )}
+
+        {practice && (
+          <div style={{ marginTop: "1rem" }}>
+            <h4 style={{ margin: "0 0 0.4rem", fontSize: "0.95rem" }}>
+              Practice Questions
+            </h4>
+            <ul style={{ fontSize: "0.9rem", paddingLeft: "1.2rem" }}>
+              {practice.map((q, idx) => (
+                <li key={idx}>{q}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
     </div>
   );

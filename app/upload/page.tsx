@@ -7,18 +7,23 @@ import Navbar from "../components/layout/navbar";
 import PageContainer from "../components/layout/PageContainer";
 import { generateCourseFromNotes } from "../lib/ai/client";
 import { upsertCourse } from "../lib/storage/courseStorage";
+import Alert from "../components/common/Alert";
+import Spinner from "../components/common/Spinner";
 
 export default function UploadPage() {
   const [notes, setNotes] = useState("");
   const [subject, setSubject] = useState("Technology");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setError(null);
+
     if (!notes.trim()) {
-      alert("Please paste some notes first.");
+      setError("Please paste some notes before generating a course.");
       return;
     }
 
@@ -29,8 +34,8 @@ export default function UploadPage() {
       router.push(`/course/${course.id}`);
     } catch (err) {
       console.error(err);
-      alert(
-        "Failed to generate your course. Once the AI API is configured, try again."
+      setError(
+        "Something went wrong while generating your course. Check your OpenAI key and try again."
       );
     } finally {
       setLoading(false);
@@ -48,6 +53,12 @@ export default function UploadPage() {
             let LearnMate AI turn them into structured modules, flashcards, and
             quizzes.
           </p>
+
+          {error && (
+            <div style={{ marginBottom: "1rem" }}>
+              <Alert variant="error">{error}</Alert>
+            </div>
+          )}
 
           <form className="upload-form" onSubmit={handleSubmit}>
             <label>
@@ -92,8 +103,18 @@ export default function UploadPage() {
             </label>
 
             <div className="upload-actions">
-              <button className="btn btn-primary" type="submit" disabled={loading}>
-                {loading ? "Generating..." : "Generate Course"}
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <Spinner size={16} /> <span>Generating...</span>
+                  </>
+                ) : (
+                  "Generate Course"
+                )}
               </button>
             </div>
           </form>
