@@ -1,27 +1,18 @@
-"use client";
-
 import type { FC } from "react";
+import styles from "./Spinner.module.css";
 
-type SpinnerProps = {
-  size?: number; // px
-};
+interface SpinnerProps {
+  size?: number;
+  className?: string;
+}
 
-const Spinner: FC<SpinnerProps> = ({ size = 18 }) => {
-  const borderWidth = Math.max(2, Math.round(size / 9));
-
+const Spinner: FC<SpinnerProps> = ({ size = 18, className = "" }) => {
   return (
     <span
       aria-label="Loading"
       role="status"
-      style={{
-        display: "inline-block",
-        width: size,
-        height: size,
-        borderRadius: "999px",
-        border: `${borderWidth}px solid rgba(148, 163, 184, 0.35)`,
-        borderTopColor: "var(--color-primary)",
-        animation: "lm-spin 0.7s linear infinite",
-      }}
+      className={`${styles.spinner} ${className}`}
+      style={{ width: size, height: size }}
     />
   );
 };

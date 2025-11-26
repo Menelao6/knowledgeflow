@@ -1,9 +1,17 @@
+// app/components/sections/HeroSection.tsx
 import Link from "next/link";
+import HeroBackground from "./HeroBackground"; // or HeroBackgroundCSS for lighter version
 import styles from "./HeroSection.module.css";
 
 const HeroSection = () => {
   return (
-    <section className="page-container">
+    <section className={`page-container ${styles.heroContainer}`}>
+      {/* Background Animation */}
+      <div className={styles.heroBackground}>
+        <HeroBackground />
+      </div>
+      
+      {/* Content */}
       <div className={styles.hero}>
         <div className={styles.heroText}>
           <div className={styles.heroKicker}>

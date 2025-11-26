@@ -31,7 +31,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
 
   return (
     <SectionWrapper bgColor="white" padding="lg">
-      <div className="mb-16">
+      <div className={styles.kicker}>
         <Heading
           level={2}
           kicker={kicker}

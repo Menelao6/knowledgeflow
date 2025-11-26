@@ -18,14 +18,14 @@ interface FeaturesSectionProps {
 }
 
 const FeaturesSection: FC<FeaturesSectionProps> = ({
-  kicker = "Why LearnMate",
+  kicker = "Why Knowledge Flow",
   title = "Powerful Features Built for Learning",
   subtitle = "Transform the way you learn with AI-powered personalization",
   features,
 }) => {
   return (
     <SectionWrapper bgColor="light" padding="lg">
-      <div className="mb-16">
+      <div className={styles.kicker}>
         <Heading
           level={2}
           kicker={kicker}

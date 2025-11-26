@@ -38,7 +38,7 @@ const TestimonialsSection: FC<TestimonialsSectionProps> = ({
 
   return (
     <SectionWrapper bgColor="primary-soft" padding="lg">
-      <div className="mb-16">
+      <div className={styles.kicker}>
         <Heading
           level={2}
           kicker={kicker}

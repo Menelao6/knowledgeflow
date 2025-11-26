@@ -92,7 +92,7 @@ export default function HomePage() {
   const testimonials = [
     {
       quote:
-        "I used to spend hours organizing my notes. LearnMate AI did it in seconds. I'm studying 3x more effectively now.",
+        "I used to spend hours organizing my notes. Knowledge Flow AI did it in seconds. I'm studying 3x more effectively now.",
       author: "Sarah Chen",
       role: "College Student",
       rating: 5,
@@ -159,7 +159,7 @@ export default function HomePage() {
 
       {/* Features Section */}
       <FeaturesSection
-        kicker="Why LearnMate"
+        kicker="Why Knowledge Flow"
         title="Powerful Features Built for Learning"
         subtitle="Transform the way you study with AI-powered personalization and adaptive learning"
         features={features}
@@ -185,7 +185,7 @@ export default function HomePage() {
       <FAQSection
         kicker="Questions?"
         title="Frequently Asked Questions"
-        subtitle="Everything you need to know about LearnMate"
+        subtitle="Everything you need to know about Knowledge Flow"
         faqs={faqs}
       />
 

@@ -9,19 +9,23 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.4.0",
     "clsx": "^2.1.1",
     "jsx": "^0.9.89",
     "next": "16.0.4",
     "openai": "^6.9.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "tag": "^0.4.17"
+    "tag": "^0.4.17",
+    "three": "^0.181.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.181.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.4",
     "tailwindcss": "^4",

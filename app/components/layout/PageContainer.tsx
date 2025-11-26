@@ -1,11 +1,17 @@
 import type { FC, ReactNode } from "react";
+import styles from "./PageContainer.module.css";
 
-type PageContainerProps = {
+interface PageContainerProps {
   children: ReactNode;
-};
+  className?: string;
+}
 
-const PageContainer: FC<PageContainerProps> = ({ children }) => {
-  return <main className="page-container">{children}</main>;
+const PageContainer: FC<PageContainerProps> = ({ children, className = "" }) => {
+  return (
+    <main className={`${styles.pageContainer} ${className}`}>
+      {children}
+    </main>
+  );
 };
 
 export default PageContainer;

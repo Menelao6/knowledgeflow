@@ -1,0 +1,230 @@
+.uploadFormContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeInUp 600ms ease-out;
+}
+
+.formHeader {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 9999px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-lg);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: var(--space-lg);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.alert {
+  margin-bottom: var(--space-xl);
+}
+
+.uploadForm {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-sm);
+}
+
+.input,
+.select,
+.textarea {
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  font-size: var(--font-size-base);
+  transition: all var(--transition-base);
+  background: var(--color-surface);
+  color: var(--color-text-main);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  transform: translateY(-1px);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 200px;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+  display: block;
+}
+
+.formActions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-xl);
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-2xl);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  min-width: 200px;
+  justify-content: center;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.buttonIcon {
+  font-size: 1.25em;
+}
+
+.features {
+  text-align: center;
+}
+
+.featuresTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: var(--space-lg);
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featuresGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-lg);
+  background: var(--color-primary-soft);
+  border-radius: 0.75rem;
+  transition: transform var(--transition-base);
+}
+
+.feature:hover {
+  transform: translateY(-2px);
+}
+
+.featureIcon {
+  font-size: 2rem;
+  margin-bottom: var(--space-md);
+}
+
+.feature h4 {
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-size-sm);
+}
+
+.feature p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

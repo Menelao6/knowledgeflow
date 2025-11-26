@@ -1,0 +1,36 @@
+.alert {
+  border-radius: 0.75rem;
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--font-size-sm);
+  border: 1px solid;
+  animation: slideIn 300ms ease-out;
+}
+
+.info {
+  background: rgba(99, 102, 241, 0.08);
+  border-color: rgba(99, 102, 241, 0.25);
+  color: var(--color-primary);
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: var(--color-danger);
+}
+
+.success {
+  background: rgba(20, 184, 166, 0.08);
+  border-color: rgba(20, 184, 166, 0.5);
+  color: var(--color-accent);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

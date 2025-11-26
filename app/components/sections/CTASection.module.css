@@ -52,6 +52,7 @@
   gap: var(--space-md);
   justify-content: center;
   flex-wrap: wrap;
+  padding-bottom: 1rem;
 }
 
 /* Animation */
