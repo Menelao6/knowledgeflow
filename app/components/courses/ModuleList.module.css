@@ -262,3 +262,101 @@
     transform: translateY(0);
   }
 }
+
+/* Add to app/components/course/ModuleList.module.css */
+
+/* Completed Module Styles */
+.moduleCard.completed {
+  border-color: var(--color-accent);
+  background: linear-gradient(135deg, var(--color-surface), rgba(20, 184, 166, 0.05));
+  position: relative;
+  overflow: hidden;
+}
+
+.moduleCard.completed::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--color-accent), #10b981);
+  opacity: 1;
+}
+
+.moduleCard.completed::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(20, 184, 166, 0.1), transparent);
+  transform: rotate(45deg);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.moduleNumber.completedNumber {
+  background: linear-gradient(135deg, var(--color-accent), #10b981);
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.moduleBadge.completedBadge {
+  background: linear-gradient(135deg, var(--color-accent), #10b981);
+  color: white;
+}
+
+.outcomeItem {
+  transition: all var(--transition-base);
+}
+
+.moduleCard.completed .outcomeItem {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.moduleCard.completed .outcomeIcon {
+  color: var(--color-accent);
+}
+
+.reviewButton {
+  background: var(--color-accent);
+}
+
+.reviewButton:hover {
+  background: #0d9488;
+}
+
+/* Update header to show completion progress */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.moduleCount {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: 9999px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}

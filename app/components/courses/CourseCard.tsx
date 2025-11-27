@@ -1,14 +1,17 @@
 import type { FC } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import type { Course } from "../../lib/models/course";
-import Card from "../common/Card";
 import ProgressBar from "../common/ProgressBar";
+import styles from "./CourseCard.module.css";
 
 type CourseCardProps = {
   course: Course;
+  onRemove?: (courseId: string) => void;
 };
 
-const CourseCard: FC<CourseCardProps> = ({ course }) => {
+const CourseCard: FC<CourseCardProps> = ({ course, onRemove }) => {
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const totalModules = course.modules.length || 1;
   const completed = course.progress.completedModuleIds.length;
   const progress = Math.round((completed / totalModules) * 100);
@@ -18,28 +21,140 @@ const CourseCard: FC<CourseCardProps> = ({ course }) => {
   if (course.category) subtitleParts.push(course.category);
   const subtitle = subtitleParts.join(" • ") || "AI-generated mini course";
 
+  const getCourseIcon = () => {
+    const category = course.category?.toLowerCase() || "general";
+    if (category.includes("tech") || category.includes("programming")) return "💻";
+    if (category.includes("math")) return "π";
+    if (category.includes("science")) return "🔬";
+    if (category.includes("language")) return "🌐";
+    if (category.includes("business")) return "💼";
+    if (category.includes("history")) return "📜";
+    if (category.includes("art")) return "🎨";
+    return "📚";
+  };
+
+  const handleRemoveClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowDeleteConfirm(true);
+  };
+
+  const handleConfirmRemove = () => {
+    onRemove?.(course.id);
+    setShowDeleteConfirm(false);
+  };
+
+  const handleCancelRemove = () => {
+    setShowDeleteConfirm(false);
+  };
+
   return (
-    <Card
-      title={course.title}
-      subtitle={subtitle}
-      headerRight={
-        <span
-          style={{
-            fontSize: "0.78rem",
-            color: "var(--color-text-muted)",
-          }}
-        >
-          {new Date(course.createdAt).toLocaleDateString()}
-        </span>
-      }
-    >
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-        <ProgressBar value={progress} label={`${progress}% complete`} />
-        <Link href={`/course/${course.id}`} className="btn btn-primary">
-          Continue
-        </Link>
+    <div className={styles.courseCard}>
+      <div className={styles.cardHeader}>
+        <div className={styles.cardIcon}>{getCourseIcon()}</div>
+        <div className={styles.cardInfo}>
+          <h3 className={styles.cardTitle}>{course.title}</h3>
+          <p className={styles.cardSubtitle}>{subtitle}</p>
+        </div>
+        <div className={styles.cardDate}>
+          {new Date(course.createdAt).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric'
+          })}
+        </div>
       </div>
-    </Card>
+
+      <div className={styles.cardContent}>
+        <div className={styles.progressSection}>
+          <ProgressBar 
+            value={progress} 
+            label={`${completed}/${totalModules} modules completed`}
+            className={styles.progressBar}
+          />
+          <div className={styles.progressStats}>
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>{totalModules}</span>
+              <span className={styles.statLabel}>Modules</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>{course.quiz.length}</span>
+              <span className={styles.statLabel}>Quiz Qs</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>{course.flashcards.length}</span>
+              <span className={styles.statLabel}>Cards</span>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.cardActions}>
+          <Link href={`/course/${course.id}`} className={styles.continueButton}>
+            {progress === 100 ? "Review Course" : "Continue Learning"}
+            <span className={styles.buttonIcon}>→</span>
+          </Link>
+          
+          {onRemove && (
+            <button
+              type="button"
+              className={styles.removeButton}
+              onClick={handleRemoveClick}
+              title="Remove course"
+            >
+              🗑️
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Status Badge */}
+      {progress === 100 && (
+        <div className={styles.completedBadge}>
+          <span className={styles.badgeIcon}>🎉</span>
+          Completed
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.confirmationModal}>
+            <div className={styles.modalHeader}>
+              <h3>Remove Course</h3>
+              <button 
+                type="button" 
+                className={styles.closeButton}
+                onClick={handleCancelRemove}
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className={styles.modalContent}>
+              <div className={styles.warningIcon}>⚠️</div>
+              <p>Are you sure you want to remove <strong>"{course.title}"</strong>?</p>
+              <p className={styles.warningText}>This action cannot be undone and all your progress will be lost.</p>
+            </div>
+            
+            <div className={styles.modalActions}>
+              <button
+                type="button"
+                className={styles.cancelButton}
+                onClick={handleCancelRemove}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className={styles.confirmButton}
+                onClick={handleConfirmRemove}
+              >
+                Remove Course
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

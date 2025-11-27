@@ -397,3 +397,19 @@
     transform: translateY(0);
   }
 }
+
+.moduleItem.completed {
+  border-color: var(--color-accent);
+  background: linear-gradient(135deg, var(--color-surface), rgba(20, 184, 166, 0.05));
+}
+
+.moduleNumber.completedNumber {
+  background: linear-gradient(135deg, var(--color-accent), #10b981);
+  color: white;
+}
+
+.completionIndicator {
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}

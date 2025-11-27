@@ -1,9 +1,9 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import styles from "./Tabs.module.css";
 
 interface Tab {
   id: string;
-  label: string;
+  label: ReactNode; // Change from string to ReactNode
 }
 
 interface TabsProps {

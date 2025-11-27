@@ -16,6 +16,7 @@ type LessonViewerProps = {
   activeModule: Module | null;
   onSelectModule: (module: Module) => void;
   onModuleCompleted?: (module: Module) => void;
+  completedModuleIds?: string[];
 };
 
 const LessonViewer: FC<LessonViewerProps> = ({
@@ -23,6 +24,7 @@ const LessonViewer: FC<LessonViewerProps> = ({
   activeModule,
   onSelectModule,
   onModuleCompleted,
+  completedModuleIds,
 }) => {
   const modules = course.modules;
   const fallbackModule = modules[0] ?? null;
@@ -109,22 +111,31 @@ const LessonViewer: FC<LessonViewerProps> = ({
           </div>
           <nav className={styles.moduleNav}>
             {modules.map((mod, idx) => {
-              const isActive = mod.id === current.id;
-              return (
-                <button
-                  key={mod.id}
-                  type="button"
-                  className={`${styles.moduleItem} ${isActive ? styles.active : ""}`}
-                  onClick={() => onSelectModule(mod)}
-                >
-                  <div className={styles.moduleNumber}>{idx + 1}</div>
-                  <div className={styles.moduleInfo}>
-                    <div className={styles.moduleTitle}>{mod.title}</div>
-                    <div className={styles.moduleSummary}>{mod.summary}</div>
-                  </div>
-                </button>
-              );
-            })}
+  const isActive = mod.id === current.id;
+  const isCompleted = completedModuleIds?.includes(mod.id);
+  
+  return (
+    <button
+      key={mod.id}
+      type="button"
+      className={`${styles.moduleItem} ${isActive ? styles.active : ''} ${isCompleted ? styles.completed : ''}`}
+      onClick={() => onSelectModule(mod)}
+    >
+      <div className={`${styles.moduleNumber} ${isCompleted ? styles.completedNumber : ''}`}>
+        {isCompleted ? "✓" : idx + 1}
+      </div>
+      <div className={styles.moduleInfo}>
+        <div className={styles.moduleTitle}>{mod.title}</div>
+        <div className={styles.moduleSummary}>{mod.summary}</div>
+      </div>
+      {isCompleted && (
+        <div className={styles.completionIndicator}>
+          ✓
+        </div>
+      )}
+    </button>
+  );
+})}
           </nav>
         </aside>
 
