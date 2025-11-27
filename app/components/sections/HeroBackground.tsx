@@ -71,11 +71,12 @@ function StudyIcons() {
 }
 
 // Main globe with network connections
+// Main globe with network connections
 function AnimatedGlobe() {
   const globeRef = useRef<THREE.Mesh>(null);
   const linesRef = useRef<THREE.Group>(null);
   
-  // Create network connections
+  // Create network connections (connections logic remains the same)
   const connections = useMemo(() => {
     const connections = [];
     for (let i = 0; i < 50; i++) {
@@ -103,8 +104,12 @@ function AnimatedGlobe() {
     }
     
     if (linesRef.current) {
-      linesRef.current.children.forEach((line, index) => {
+      // FIX: Explicitly cast 'line' to THREE.Line for type safety
+      linesRef.current.children.forEach((object, index) => {
+        // Narrow the type to ensure it has the 'geometry' property
+        const line = object as THREE.Line; 
         const connection = connections[index];
+        
         connection.progress += connection.speed * 0.01;
         if (connection.progress > 1) connection.progress = 0;
         
@@ -118,6 +123,7 @@ function AnimatedGlobe() {
           );
         }
         
+        // The error is resolved because TypeScript now knows 'line' is a THREE.Line
         line.geometry.setFromPoints(points);
       });
     }
@@ -125,7 +131,7 @@ function AnimatedGlobe() {
 
   return (
     <group>
-      {/* Globe */}
+      {/* Rest of the component remains the same */}
       <mesh ref={globeRef}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshBasicMaterial
@@ -156,6 +162,7 @@ function AnimatedGlobe() {
     </group>
   );
 }
+
 
 export default function HeroBackground() {
   return (

@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from "react";
+import type { FC, ReactNode, ElementType } from "react";
 import styles from "./Heading.module.css";
 
 interface HeadingProps {
@@ -24,7 +24,7 @@ const Heading: FC<HeadingProps> = ({
   const alignClass = styles[align];
   const animationClass = animate ? styles.headingAnimate : "";
 
-  const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+  const Tag: ElementType = `h${level}`; 
 
   return (
     <div className={`${styles.headingContainer} ${alignClass} ${className}`}>
