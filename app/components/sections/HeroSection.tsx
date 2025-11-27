@@ -20,7 +20,7 @@ const HeroSection = () => {
           <h1 className={styles.title}>Turn Notes & Topics Into Personalized AI Courses</h1>
           <p className={styles.subtitle}>
             Upload your notes or pick a topic like Python or Algebra and let
-            LearnMate AI transform it into modules, quizzes, and flashcards
+            Knowledge Flow AI transform it into modules, quizzes, and flashcards
             tailored to your learning pace.
           </p>
           <div className={styles.heroActions}>

@@ -1,4 +1,4 @@
-learnmate-ai/
+Knowledgeflow-ai/
 ├─ pages/
 │  ├─ index.tsx                 # Landing
 │  ├─ upload.tsx                # Upload / create from notes

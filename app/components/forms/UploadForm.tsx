@@ -53,7 +53,7 @@ export default function UploadForm({ className = "" }: UploadFormProps) {
         </div>
         <h1 className={styles.title}>Transform Your Notes into a Course</h1>
         <p className={styles.subtitle}>
-          Paste lecture notes, textbook excerpts, or study materials and let LearnMate AI 
+          Paste lecture notes, textbook excerpts, or study materials and let Knowledge Flow AI 
           transform them into structured modules, interactive quizzes, and smart flashcards.
         </p>
       </div>
