@@ -1,37 +1,30 @@
-"use client";
+import type { FC } from "react";
+import styles from "./Tabs.module.css";
 
-import type { FC, ReactNode } from "react";
-import clsx from "clsx";
-
-export type TabItem = {
+interface Tab {
   id: string;
   label: string;
-};
+}
 
-type TabsProps = {
-  tabs: TabItem[];
+interface TabsProps {
+  tabs: Tab[];
   activeId: string;
   onChange: (id: string) => void;
-};
+  className?: string;
+}
 
-const Tabs: FC<TabsProps> = ({ tabs, activeId, onChange }) => {
+const Tabs: FC<TabsProps> = ({ tabs, activeId, onChange, className = "" }) => {
   return (
-    <div className="tabs">
-      {tabs.map((tab) => {
-        const isActive = tab.id === activeId;
-        return (
-          <button
-            key={tab.id}
-            type="button"
-            className={clsx("tab-button", {
-              "tab-button-active": isActive,
-            })}
-            onClick={() => onChange(tab.id)}
-          >
-            {tab.label}
-          </button>
-        );
-      })}
+    <div className={`${styles.tabs} ${className}`}>
+      {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          className={`${styles.tab} ${activeId === tab.id ? styles.active : ""}`}
+          onClick={() => onChange(tab.id)}
+        >
+          {tab.label}
+        </button>
+      ))}
     </div>
   );
 };

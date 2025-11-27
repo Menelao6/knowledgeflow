@@ -1,4 +1,3 @@
-// lib/ai/client.ts
 import type { Course } from "../models/course";
 
 /**

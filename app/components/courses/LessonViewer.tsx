@@ -9,6 +9,7 @@ import {
 } from "../../lib/ai/client";
 import Spinner from "../common/Spinner";
 import Alert from "../common/Alert";
+import styles from "./LessonViewer.module.css";
 
 type LessonViewerProps = {
   course: Course;
@@ -24,11 +25,16 @@ const LessonViewer: FC<LessonViewerProps> = ({
   onModuleCompleted,
 }) => {
   const modules = course.modules;
-
   const fallbackModule = modules[0] ?? null;
 
   if (!modules.length || !fallbackModule) {
-    return <p className="text-muted">No modules for this course yet.</p>;
+    return (
+      <div className={styles.emptyState}>
+        <div className={styles.emptyIcon}>📚</div>
+        <h3>No Modules Available</h3>
+        <p>Course modules will be generated when you create your course.</p>
+      </div>
+    );
   }
 
   const current = activeModule ?? fallbackModule;
@@ -46,7 +52,6 @@ const LessonViewer: FC<LessonViewerProps> = ({
     setError(null);
     setLoadingExplain(false);
     setLoadingPractice(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current.id]);
 
   async function handleExplainSimple() {
@@ -94,140 +99,137 @@ const LessonViewer: FC<LessonViewerProps> = ({
   }
 
   return (
-    <div className="lesson-layout">
-      <aside className="lesson-sidebar">
-        <h3
-          style={{
-            fontSize: "0.95rem",
-            margin: "0 0 0.6rem",
-          }}
-        >
-          Modules
-        </h3>
-        <div>
-          {modules.map((mod, idx) => {
-            const isActive = mod.id === current.id;
-            return (
+    <div className={styles.lessonViewer}>
+      <div className={styles.layout}>
+        {/* Sidebar */}
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarHeader}>
+            <h3>Course Modules</h3>
+            <span className={styles.moduleCount}>{modules.length} modules</span>
+          </div>
+          <nav className={styles.moduleNav}>
+            {modules.map((mod, idx) => {
+              const isActive = mod.id === current.id;
+              return (
+                <button
+                  key={mod.id}
+                  type="button"
+                  className={`${styles.moduleItem} ${isActive ? styles.active : ""}`}
+                  onClick={() => onSelectModule(mod)}
+                >
+                  <div className={styles.moduleNumber}>{idx + 1}</div>
+                  <div className={styles.moduleInfo}>
+                    <div className={styles.moduleTitle}>{mod.title}</div>
+                    <div className={styles.moduleSummary}>{mod.summary}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </nav>
+        </aside>
+
+        {/* Main Content */}
+        <main className={styles.mainContent}>
+          <header className={styles.lessonHeader}>
+            <div className={styles.moduleBadge}>Module {modules.findIndex(m => m.id === current.id) + 1}</div>
+            <h1 className={styles.lessonTitle}>{current.title}</h1>
+            {current.summary && (
+              <p className={styles.lessonSummary}>{current.summary}</p>
+            )}
+          </header>
+
+          <div className={styles.lessonContent}>
+            <div className={styles.contentCard}>
+              <h3>Lesson Content</h3>
+              <div className={styles.contentText}>{current.content}</div>
+            </div>
+
+            {current.learningOutcomes.length > 0 && (
+              <div className={styles.outcomesCard}>
+                <h3>Learning Outcomes</h3>
+                <ul className={styles.outcomesList}>
+                  {current.learningOutcomes.map((outcome, idx) => (
+                    <li key={idx}>{outcome}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* AI Tools */}
+          <div className={styles.aiTools}>
+            <h3>AI Learning Tools</h3>
+            <div className={styles.toolGrid}>
               <button
-                key={mod.id}
                 type="button"
-                className={
-                  "lesson-module-item" +
-                  (isActive ? " lesson-module-item-active" : "")
-                }
-                onClick={() => onSelectModule(mod)}
+                className={styles.toolButton}
+                onClick={handleExplainSimple}
+                disabled={loadingExplain}
               >
-                <span className="lesson-module-title">
-                  {idx + 1}. {mod.title}
+                <span className={styles.toolIcon}>✨</span>
+                <span className={styles.toolContent}>
+                  <strong>Explain Simply</strong>
+                  <span>Get a simplified explanation</span>
                 </span>
+                {loadingExplain && <Spinner size={16} />}
               </button>
-            );
-          })}
-        </div>
-      </aside>
 
-      <section>
-        <h2 className="lesson-main-title">{current.title}</h2>
-        <div className="lesson-content">{current.content}</div>
+              <button
+                type="button"
+                className={styles.toolButton}
+                onClick={handleGeneratePractice}
+                disabled={loadingPractice}
+              >
+                <span className={styles.toolIcon}>❓</span>
+                <span className={styles.toolContent}>
+                  <strong>Practice Questions</strong>
+                  <span>Generate extra practice</span>
+                </span>
+                {loadingPractice && <Spinner size={16} />}
+              </button>
+            </div>
+          </div>
 
-        <div className="lesson-meta">
-          {current.learningOutcomes.length > 0 && (
-            <div>
-              <h4>Learning outcomes</h4>
-              <ul className="module-outcomes">
-                {current.learningOutcomes.map((outcome, idx) => (
-                  <li key={idx}>{outcome}</li>
+          {/* AI Outputs */}
+          {error && (
+            <Alert variant="error" className={styles.alert}>
+              {error}
+            </Alert>
+          )}
+
+          {simpleText && (
+            <div className={styles.aiOutput}>
+              <h4>Simple Explanation</h4>
+              <div className={styles.outputContent}>{simpleText}</div>
+            </div>
+          )}
+
+          {practice && (
+            <div className={styles.aiOutput}>
+              <h4>Practice Questions</h4>
+              <ul className={styles.practiceList}>
+                {practice.map((q, idx) => (
+                  <li key={idx}>{q}</li>
                 ))}
               </ul>
             </div>
           )}
-        </div>
 
-        <div className="lesson-actions">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={handleExplainSimple}
-            disabled={loadingExplain}
-          >
-            {loadingExplain ? (
-              <>
-                <Spinner size={16} /> <span>Explaining...</span>
-              </>
-            ) : (
-              "Explain in simple terms"
-            )}
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={handleGeneratePractice}
-            disabled={loadingPractice}
-          >
-            {loadingPractice ? (
-              <>
-                <Spinner size={16} /> <span>Generating questions...</span>
-              </>
-            ) : (
-              "Generate practice questions"
-            )}
-          </button>
-
+          {/* Completion */}
           {onModuleCompleted && (
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={handleMarkCompleted}
-            >
-              Mark module as completed
-            </button>
+            <div className={styles.completionSection}>
+              <button
+                type="button"
+                className={styles.completeButton}
+                onClick={handleMarkCompleted}
+              >
+                <span>Mark as Completed</span>
+                <span>✓</span>
+              </button>
+            </div>
           )}
-        </div>
-
-        {error && (
-          <div style={{ marginTop: "1rem" }}>
-            <Alert variant="error">{error}</Alert>
-          </div>
-        )}
-
-        {loadingExplain && !simpleText && (
-          <div style={{ marginTop: "1rem" }}>
-            <Spinner size={22} />{" "}
-            <span style={{ fontSize: "0.9rem" }}>
-              Explaining this module in simple terms...
-            </span>
-          </div>
-        )}
-
-        {simpleText && (
-          <div style={{ marginTop: "1rem" }}>
-            <Alert variant="info">{simpleText}</Alert>
-          </div>
-        )}
-
-        {loadingPractice && !practice && (
-          <div style={{ marginTop: "1rem" }}>
-            <Spinner size={22} />{" "}
-            <span style={{ fontSize: "0.9rem" }}>
-              Generating extra practice questions...
-            </span>
-          </div>
-        )}
-
-        {practice && (
-          <div style={{ marginTop: "1rem" }}>
-            <h4 style={{ margin: "0 0 0.4rem", fontSize: "0.95rem" }}>
-              Practice Questions
-            </h4>
-            <ul style={{ fontSize: "0.9rem", paddingLeft: "1.2rem" }}>
-              {practice.map((q, idx) => (
-                <li key={idx}>{q}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </section>
+        </main>
+      </div>
     </div>
   );
 };

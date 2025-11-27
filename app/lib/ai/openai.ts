@@ -3,7 +3,7 @@ import OpenAI from "openai";
 
 if (!process.env.OPENAI_API_KEY) {
   console.warn(
-    "[LearnMate AI] OPENAI_API_KEY is not set. API routes will return errors until it is configured."
+    "[Knowledge Flow] OPENAI_API_KEY is not set. API routes will return errors until it is configured."
   );
 }
 

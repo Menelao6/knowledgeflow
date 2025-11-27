@@ -1,20 +1,25 @@
 import type { FC } from "react";
+import styles from "./ProgressBar.module.css";
 
-type ProgressBarProps = {
-  value: number; // 0–100
+interface ProgressBarProps {
+  value: number;
   label?: string;
-};
+  className?: string;
+}
 
-const ProgressBar: FC<ProgressBarProps> = ({ value, label }) => {
-  const clamped = Math.max(0, Math.min(100, value));
-
+const ProgressBar: FC<ProgressBarProps> = ({ value, label, className = "" }) => {
+  const progress = Math.max(0, Math.min(100, value));
+  
   return (
-    <div className="progress">
-      {label && <span className="progress-label">{label}</span>}
-      <div className="progress-track">
+    <div className={`${styles.progressBar} ${className}`}>
+      <div className={styles.progressHeader}>
+        {label && <span className={styles.label}>{label}</span>}
+        <span className={styles.percentage}>{progress}%</span>
+      </div>
+      <div className={styles.track}>
         <div
-          className="progress-fill"
-          style={{ width: `${clamped}%` }}
+          className={styles.fill}
+          style={{ width: `${progress}%` }}
         />
       </div>
     </div>

@@ -1,4 +1,3 @@
-// lib/data/categories.ts
 export type Category = {
   slug: string;
   name: string;

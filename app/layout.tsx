@@ -9,7 +9,7 @@ import "./styles/course.css";
 import type { ReactNode } from "react";
 
 export const metadata = {
-  title: "LearnMate AI",
+  title: "Knowledge Flow",
   description: "Turn notes & topics into personalized AI courses.",
 };
 
