@@ -6,10 +6,24 @@ export async function POST(req: Request) {
     const { title, content } = await req.json();
 
     const systemPrompt = `
-You are a helpful tutor. Generate **5 practice questions** about this module.
-Return them as an array of strings in valid JSON only.
-Example:
-["Question 1...", "Question 2...", ...]
+Generate 10 mixed-format practice questions based on the module.
+
+Include:
+- 3 recall questions (easy)
+- 3 understanding questions
+- 2 application questions (real-world scenario)
+- 1 fill-in-the-blank
+- 1 reverse question: “Given the answer, what was the question?”
+
+Return ONLY JSON:
+
+{
+  "questions": [
+    { "type": "recall", "question": "" },
+    { "type": "scenario", "question": "" },
+    { "type": "fill_blank", "question": "" }
+  ]
+}
 `;
 
     const userPrompt = `

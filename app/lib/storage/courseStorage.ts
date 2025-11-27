@@ -34,3 +34,20 @@ export function upsertCourse(course: Course): void {
 export function getCourseById(id: string): Course | undefined {
   return getCourses().find((c) => c.id === id);
 }
+
+// Add this function for removing courses
+export function removeCourse(courseId: string): void {
+  try {
+    const courses = getCourses();
+    const updatedCourses = courses.filter(course => course.id !== courseId);
+    saveCourses(updatedCourses);
+  } catch (error) {
+    console.error('Error removing course:', error);
+    throw new Error('Failed to remove course');
+  }
+}
+
+// Optional: Add this function if you need to get all courses (alias for getCourses)
+export function getAllCourses(): Course[] {
+  return getCourses();
+}

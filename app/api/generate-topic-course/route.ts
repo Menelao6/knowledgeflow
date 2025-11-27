@@ -60,13 +60,18 @@ JSON FORMAT (very important):
 }
 
 Rules:
-- Create 3–6 modules that cover the topic in a logical sequence.
-- Tailor depth to the given level: beginner, intermediate, or advanced.
+- Create 3–6 modules.
 - Each module must have at least 3 learning outcomes.
+- Tailor depth to the given level: beginner, intermediate, or advanced.
+- Use the student’s notes as the core knowledge.
+- Add small creative examples to help learning.
+- Keep content accurate, beginner-friendly, and enjoyable
 - Generate 10–15 flashcards total.
 - Generate 5–10 quiz questions total.
-- Use clear, friendly language with concrete examples.
+- Include at least 2 checkpoint questions per module.
+- Use information from the notes. If something isn't in the notes, keep it simple and introductory.
 - Return VALID JSON ONLY, no extra text.
+- Make the course unique and modern in style.
 `;
 
     const userPrompt = `

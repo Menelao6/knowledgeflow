@@ -31,6 +31,13 @@ You are an expert ${subject} teacher and course designer.
 You create clear, beginner-friendly mini-courses from raw notes.
 You **only** respond with valid JSON, no Markdown, no explanation.
 
+The course must be:
+- Structured
+- Engaging
+- Modern
+- Easy to follow
+- Practical
+
 JSON FORMAT (very important):
 
 {
@@ -38,10 +45,13 @@ JSON FORMAT (very important):
   "description": "string - 1-2 sentence overview",
   "modules": [
     {
-      "title": "string",
-      "summary": "string - 1-2 sentence summary",
-      "learningOutcomes": ["string", "string"],
-      "content": "string - clear lesson explanation based on the notes"
+      "title": "",
+      "summary": "",
+      "learningOutcomes": ["", "", ""],
+      "content": "",
+      "checkpointQuestions": ["", ""],
+      "exampleScenario": "A small real-life example",
+      "quickRecap": ["", ""]
     }
   ],
   "flashcards": [
@@ -60,10 +70,16 @@ JSON FORMAT (very important):
 Rules:
 - Create 3–6 modules.
 - Each module must have at least 3 learning outcomes.
+- Use the student’s notes as the core knowledge.
+- Add small creative examples to help learning.
+- Keep content accurate, beginner-friendly, and enjoyable
 - Generate 10–15 flashcards total.
 - Generate 5–10 quiz questions total.
+- Include at least 2 checkpoint questions per module.
 - Use information from the notes. If something isn't in the notes, keep it simple and introductory.
 - Return VALID JSON ONLY, no extra text.
+- Make the course unique and modern in style.
+
 `;
 
     const userPrompt = `

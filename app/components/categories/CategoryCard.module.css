@@ -1,0 +1,70 @@
+.categoryCard {
+  transition: all var(--transition-base);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.1);
+}
+
+.categoryCardWrapper {
+  transition: all var(--transition-base);
+  height: 100%;
+}
+
+.categoryCardWrapper:hover {
+  transform: translateY(-4px);
+}
+
+.aiBadge {
+  font-size: 0.78rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardContent {
+  margin-top: auto;
+  padding-top: var(--space-md);
+}
+
+.viewButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.viewButton:hover {
+  background: #4f46e5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  text-decoration: none;
+  color: white;
+  gap: var(--space-md);
+}
+
+.buttonIcon {
+  transition: transform var(--transition-base);
+}
+
+.viewButton:hover .buttonIcon {
+  transform: translateX(2px);
+}

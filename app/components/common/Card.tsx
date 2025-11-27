@@ -5,6 +5,7 @@ type CardProps = {
   subtitle?: ReactNode;
   headerRight?: ReactNode;
   children?: ReactNode;
+  className?: string;
 };
 
 const Card: FC<CardProps> = ({ title, subtitle, headerRight, children }) => {
