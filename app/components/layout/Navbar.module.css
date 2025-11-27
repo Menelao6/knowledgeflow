@@ -1,3 +1,4 @@
+
 .navbar {
   position: sticky;
   top: 0;
@@ -11,6 +12,22 @@
   align-items: center;
   gap: var(--space-lg);
   animation: fadeInDown 400ms ease-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: var(--space-md) var(--space-lg);
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
 }
 
 .navbarLeft,
@@ -20,8 +37,23 @@
   gap: var(--space-md);
 }
 
+@media (max-width: 768px) {
+  .navbarLeft,
+  .navbarRight {
+    gap: var(--space-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .navbarLeft,
+  .navbarRight {
+    gap: var(--space-xs);
+  }
+}
+
 .navbarLeft {
   gap: var(--space-sm);
+  flex-shrink: 0;
 }
 
 .navbarLogo {
@@ -39,6 +71,15 @@
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
   text-decoration: none;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .navbarLogo {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: var(--font-size-base);
+  }
 }
 
 .navbarLogo:hover {
@@ -53,11 +94,50 @@
   color: var(--color-text-main);
   cursor: pointer;
   text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .navbarTitle {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbarTitle {
+    display: none;
+  }
 }
 
 .navbarTitle:hover {
   text-decoration: none;
   color: var(--color-primary);
+}
+
+.navbarRight {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+/* Mobile button adjustments */
+@media (max-width: 768px) {
+  .navbarRight .btn {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .navbarRight {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .navbarRight .btn {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+  }
 }
 
 @keyframes fadeInDown {
@@ -68,20 +148,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-  .navbar {
-    padding: var(--space-md) var(--space-lg);
-  }
-  
-  .navbarTitle {
-    font-size: var(--font-size-base);
-  }
-  
-  .navbarRight {
-    gap: var(--space-sm);
   }
 }
